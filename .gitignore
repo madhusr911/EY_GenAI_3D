@@ -1,3 +1,5 @@
+.env
+**/.env
+student_config.json
 __pycache__/
 *.pyc
-student_config.json

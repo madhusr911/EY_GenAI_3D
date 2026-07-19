@@ -135,7 +135,7 @@ input[type=text]:focus,select:focus{outline:none;border-color:var(--accent)}
   <a class="nav-pill" href="#s6">Determinism</a>
   <a class="nav-pill" href="#s7">Assessment</a>
   <a class="nav-pill" href="#labs">Lab</a>
-  <span class="nav-prog" id="nav-prog">Section 1 / 8</span>
+  <span class="nav-prog" id="nav-prog">Section 1 / 9</span>
 </nav>
 
 <!-- S1 HERO -->
@@ -146,6 +146,56 @@ input[type=text]:focus,select:focus{outline:none;border-color:var(--accent)}
   <div class="card" style="max-width:760px">
     <p style="font-size:15px;line-height:1.7">The one idea underneath everything else in this module: <strong style="color:var(--accent)">an LLM is a next-token predictor.</strong> It doesn't "know" your answer — at every step it scores every possible next token and picks one. Everything else in this module is a consequence of that single fact: tokens are the unit it thinks in, decoding controls decide <em>how</em> it picks from its own scored candidates, and determinism is just "how much randomness did we allow in that pick." Unit 2's playground below lets you run that exact pick-a-token step yourself.</p>
   </div>
+  <div class="playground" style="max-width:760px;margin-top:28px">
+    <div class="pg-label">60-Second Demo — See It Live</div>
+    <div class="pg-title">A real Meridian Retail Bank support message, sent to the API</div>
+    <div class="code-block">client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": "You are a Meridian Retail Bank support assistant."},
+        {"role": "user", "content": "My debit card was declined twice today, this is urgent!"}
+    ]
+)</div>
+    <button class="btn btn-primary btn-sm" onclick="runDemo()" id="demo-btn">▶ Run it</button>
+    <div class="pg-output" id="demo-output" style="display:none">
+      <div style="font-size:12px;color:var(--dim);margin-bottom:6px">response.choices[0].message.content</div>
+      <p id="demo-text" style="font-size:15px;color:var(--white);line-height:1.6;min-height:48px"></p>
+      <div id="demo-meta" style="margin-top:10px;font-size:12.5px;color:var(--dim)"></div>
+    </div>
+    <p style="font-size:12.5px;color:var(--dim);margin-top:10px">This is the exact response shape the real API returns, typed out here so you can see it without spending an API call — you'll make the real call yourself within the hour.</p>
+  </div>
+
+  <div class="card" style="max-width:760px;margin-top:20px">
+    <h4 style="color:var(--white);margin-bottom:10px">By the end of this module, you can</h4>
+    <ul style="padding-left:20px;font-size:14.5px;color:var(--text);line-height:1.9">
+      <li>Explain why tokens, not words, are the unit that determines cost and context budget</li>
+      <li>Predict how temperature, top_p, max_tokens and stop sequences will change a model's output — because you've computed it live, not just read about it</li>
+      <li>Correctly separate system / user / assistant roles in a multi-turn request</li>
+      <li>Choose a model tier based on task complexity, latency tolerance and call volume, not habit</li>
+      <li>Explain why the same prompt can produce two different answers, and when that's a problem versus a feature</li>
+      <li>Read a real Chat Completions response object and know what each field costs you</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h4 style="color:var(--white);margin-bottom:14px">Where this sits in the 3-day programme</h4>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div style="flex:1;min-width:140px;background:var(--accent)1A;border:1px solid var(--accent);border-radius:8px;padding:10px 12px">
+        <div style="font-size:10px;font-weight:700;color:var(--accent);letter-spacing:1px">DAY 1 · YOU ARE HERE</div>
+        <div style="font-size:12.5px;color:var(--white);margin-top:4px;font-weight:700">M1.1 Mechanics → M1.2 API → M1.3 Prompting → M1.4 Embeddings</div>
+      </div>
+      <div style="flex:1;min-width:140px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:10px 12px">
+        <div style="font-size:10px;font-weight:700;color:var(--dim);letter-spacing:1px">DAY 2</div>
+        <div style="font-size:12.5px;color:var(--text);margin-top:4px">LangChain · Vector DBs · RAG</div>
+      </div>
+      <div style="flex:1;min-width:140px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:10px 12px">
+        <div style="font-size:10px;font-weight:700;color:var(--dim);letter-spacing:1px">DAY 3</div>
+        <div style="font-size:12.5px;color:var(--text);margin-top:4px">LangGraph · Multi-Agent · Production</div>
+      </div>
+    </div>
+    <p style="font-size:12.5px;color:var(--dim);margin-top:12px">Everything here is also <strong style="color:var(--accent)">Capstone Phase 1</strong> foundation — the Meridian Retail Bank GenAI Operations Assistant you'll build across all three days.</p>
+  </div>
+
   <div class="hero-grid">
     <a class="hero-tile" href="#s2"><div class="hero-tile-num">S2</div><div class="hero-tile-label">Tokens &amp; Context</div></a>
     <a class="hero-tile" href="#s3"><div class="hero-tile-num">S3</div><div class="hero-tile-label">Sampling Lab</div></a>
@@ -185,7 +235,7 @@ response.choices[0].finish_reason
   # -> "stop"   (finished naturally)  or  "length"  (hit max_tokens)
 response.usage.prompt_tokens, response.usage.completion_tokens
   # -> 42, 31   — this pair is what you're billed on, every single call</div>
-    <p style="font-size:13px;color:var(--dim);margin-top:8px">"Cost" is <code style="color:var(--accent)">tokens × the provider's current per-token rate</code> — deliberately not shown as a number here (see Unit 4's note on why). The shape above is what you'll actually inspect in today's lab and every lab after it.</p>
+    <p style="font-size:13px;color:var(--dim);margin-top:8px">Worked example at today's lab model (<code style="color:var(--accent)">gpt-4o-mini</code>: $0.15 / 1M input tokens, $0.60 / 1M output tokens — verify the current rate before quoting a live cohort, these change): 42 prompt + 31 completion tokens ≈ <strong style="color:var(--accent)">$0.000025</strong> for that one call, a fraction of a cent. What actually matters in production isn't any single call — it's call volume × completion length at scale. The shape above is what you'll actually inspect in today's lab and every lab after it.</p>
   </div>
   <div class="card-grid card-grid-2" style="margin-bottom:20px">
     <div class="card">
@@ -377,6 +427,20 @@ response.usage.prompt_tokens, response.usage.completion_tokens
   </div>
 </div>
 
+<!-- S8 KEY TAKEAWAYS -->
+<section class="section" id="s8" style="min-height:auto;padding-top:60px;padding-bottom:40px">
+  <div class="section-label">Recap</div>
+  <div class="section-title">Key Takeaways</div>
+  <div class="card-grid card-grid-3">
+    <div class="card"><div class="accent-bar"></div><h4 style="color:var(--white);margin-bottom:6px">Tokens</h4><p style="font-size:13.5px;color:var(--text)">The unit of cost and context — not words.</p></div>
+    <div class="card"><div class="accent-bar"></div><h4 style="color:var(--white);margin-bottom:6px">Context</h4><p style="font-size:13.5px;color:var(--text)">Working memory with a hard ceiling — fitting isn't the same as using well.</p></div>
+    <div class="card"><div class="accent-bar"></div><h4 style="color:var(--white);margin-bottom:6px">Sampling</h4><p style="font-size:13.5px;color:var(--text)">Temperature and top_p control how the model picks from its own scored candidates.</p></div>
+    <div class="card"><div class="accent-bar"></div><h4 style="color:var(--white);margin-bottom:6px">Roles</h4><p style="font-size:13.5px;color:var(--text)">system / user / assistant, resent every call — the model has no memory of its own.</p></div>
+    <div class="card"><div class="accent-bar"></div><h4 style="color:var(--white);margin-bottom:6px">Model Selection</h4><p style="font-size:13.5px;color:var(--text)">No single "best" model — only the right trade-off, measured, not assumed.</p></div>
+    <div class="card"><div class="accent-bar"></div><h4 style="color:var(--white);margin-bottom:6px">Determinism</h4><p style="font-size:13.5px;color:var(--text)">Variance is a design choice, not a bug — and a liability for anything auditable.</p></div>
+  </div>
+</section>
+
 <!-- LAB -->
 <section class="section" id="labs" style="align-items:stretch;min-height:auto;padding-top:64px">
   <div class="section-label">Your Lab</div>
@@ -404,7 +468,43 @@ response.usage.prompt_tokens, response.usage.completion_tokens
   </div>
 </section>
 
+<div class="quiz-marker fade-in" style="max-width:900px;margin:0 48px 60px;background:#10B9811A;border-color:#10B98159">
+  <div>
+    <div class="quiz-title" style="color:var(--success)">✅ Mission Complete — M1.1</div>
+    <div class="quiz-desc">You now understand how an LLM thinks: tokens, sampling, roles, model trade-offs, determinism. Next up, same day: <strong style="color:var(--white)">M1.2</strong> turns this into working code — the OpenAI API, structured outputs and tool calling. Embeddings, vector databases and RAG arrive on Day 2.</div>
+  </div>
+</div>
+
 <script>
+// ══════════════════════════════════════════════════════════════════
+// HERO — 60-SECOND DEMO (typewriter reveal of a canned, honestly-labelled response)
+// ══════════════════════════════════════════════════════════════════
+function runDemo(){
+  const btn = document.getElementById('demo-btn');
+  const out = document.getElementById('demo-output');
+  const textEl = document.getElementById('demo-text');
+  const metaEl = document.getElementById('demo-meta');
+  if (!btn || !out || !textEl || !metaEl) return;
+  btn.disabled = true;
+  btn.textContent = 'Running…';
+  out.style.display = 'block';
+  textEl.textContent = '';
+  metaEl.textContent = '';
+  const full = "I'm sorry to hear your card was declined — I understand this is urgent. Please try again in a few minutes, as a temporary security hold may be active, or visit your nearest Meridian branch for immediate help.";
+  let i = 0;
+  const interval = setInterval(() => {
+    textEl.textContent = full.slice(0, i);
+    i += 3;
+    if (i > full.length){
+      clearInterval(interval);
+      textEl.textContent = full;
+      metaEl.innerHTML = 'finish_reason: <span style="color:var(--success)">stop</span> &nbsp;·&nbsp; usage: 42 prompt + 31 completion tokens &nbsp;·&nbsp; cost: ≈$0.000025 (gpt-4o-mini, verify current rate)';
+      btn.textContent = '▶ Run it again';
+      btn.disabled = false;
+    }
+  }, 20);
+}
+
 // ══════════════════════════════════════════════════════════════════
 // UNIT 1 — LIVE TOKEN CHUNKER (heuristic, illustrative only)
 // ══════════════════════════════════════════════════════════════════

@@ -77,7 +77,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(11,18,32,.9
   <a class="nav-pill" href="#s5">Tool Calling</a>
   <a class="nav-pill" href="#s6">Robustness</a>
   <a class="nav-pill" href="#labs">Lab</a>
-  <span class="nav-prog" id="nav-prog">Section 1 / 7</span>
+  <span class="nav-prog" id="nav-prog">Section 1 / 8</span>
 </nav>
 
 <section class="section" id="s1" style="background:radial-gradient(ellipse at 60% 40%,#C9A44C08 0%,transparent 60%)">
@@ -87,6 +87,50 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(11,18,32,.9
   <div class="card" style="max-width:760px">
     <p style="font-size:15px;line-height:1.7">Everything downstream — Day 2's RAG pipeline, Day 3's agents — is built out of the same handful of primitives you'll use today: streaming, structured outputs, and tool calling, wrapped in enough error handling that a flaky network call doesn't take down a production flow. Today's lab produces a structured-extraction module that becomes <strong style="color:var(--accent)">Capstone Phase 1</strong> — not a throwaway exercise.</p>
   </div>
+  <div class="playground" style="max-width:760px;margin-top:28px;background:linear-gradient(180deg,#1A2438,#141D30);border:1px solid var(--accent)40;border-radius:14px;padding:24px 26px">
+    <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:4px">60-Second Demo — See It Live</div>
+    <div style="font-size:18px;font-weight:800;color:var(--white);margin-bottom:14px">Tool calling, end to end, on a real Meridian message</div>
+    <div class="code-block">tools=[EXTRACTION_TOOL]
+tool_choice={"type": "function", "function": {"name": "extract_customer_request"}}
+# model replies with a tool call instead of plain text:</div>
+    <button class="btn-primary" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:8px;font-size:15px;font-weight:600;border:none;cursor:pointer;background:var(--accent);color:#1a1300" onclick="runToolDemo()" id="tooldemo-btn">▶ Run it</button>
+    <div id="tooldemo-output" style="display:none;background:#080D18;border:1px solid var(--accent)40;border-radius:10px;padding:16px;margin-top:14px">
+      <div style="font-size:12px;color:var(--dim);margin-bottom:6px">tool_call.function.arguments (parsed)</div>
+      <pre id="tooldemo-json" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--accent);white-space:pre-wrap;min-height:20px"></pre>
+    </div>
+    <p style="font-size:12.5px;color:var(--dim);margin-top:10px">Typed out here so you can see the exact shape without spending an API call — you'll build the function that produces this yourself in today's lab.</p>
+  </div>
+
+  <div class="card" style="max-width:760px;margin-top:20px">
+    <h4 style="color:var(--white);margin-bottom:10px">By the end of this module, you can</h4>
+    <ul style="padding-left:20px;font-size:14.5px;color:var(--text);line-height:1.9">
+      <li>Set up SDK auth correctly and fail loudly instead of silently when a key is missing</li>
+      <li>Explain when streaming helps and when it's the wrong tool (structured extraction isn't it)</li>
+      <li>Choose between JSON mode and tool calling, and explain why this programme standardises on tool calling</li>
+      <li>Define a tool schema by hand and route a model's tool call through validation</li>
+      <li>Build a bounded retry loop that recovers from a malformed response instead of crashing</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h4 style="color:var(--white);margin-bottom:14px">Where this sits in the 3-day programme</h4>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div style="flex:1;min-width:140px;background:var(--accent)1A;border:1px solid var(--accent);border-radius:8px;padding:10px 12px">
+        <div style="font-size:10px;font-weight:700;color:var(--accent);letter-spacing:1px">DAY 1 · YOU ARE HERE</div>
+        <div style="font-size:12.5px;color:var(--white);margin-top:4px;font-weight:700">M1.1 Mechanics → M1.2 API → M1.3 Prompting → M1.4 Embeddings</div>
+      </div>
+      <div style="flex:1;min-width:140px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:10px 12px">
+        <div style="font-size:10px;font-weight:700;color:var(--dim);letter-spacing:1px">DAY 2</div>
+        <div style="font-size:12.5px;color:var(--text);margin-top:4px">LangChain · Vector DBs · RAG</div>
+      </div>
+      <div style="flex:1;min-width:140px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:10px 12px">
+        <div style="font-size:10px;font-weight:700;color:var(--dim);letter-spacing:1px">DAY 3</div>
+        <div style="font-size:12.5px;color:var(--text);margin-top:4px">LangGraph · Multi-Agent · Production</div>
+      </div>
+    </div>
+    <p style="font-size:12.5px;color:var(--dim);margin-top:12px">Today's extraction module is <strong style="color:var(--accent)">Capstone Phase 1</strong> — reused as-is in the Meridian Retail Bank GenAI Operations Assistant you'll build across all three days.</p>
+  </div>
+
   <div class="hero-grid">
     <a class="hero-tile" href="#s2"><div class="hero-tile-num">S2</div><div class="hero-tile-label">SDK &amp; Setup</div></a>
     <a class="hero-tile" href="#s3"><div class="hero-tile-num">S3</div><div class="hero-tile-label">Streaming</div></a>
@@ -196,7 +240,24 @@ for chunk in stream:
       <p style="font-size:14px;line-height:1.65">A bounded retry count with backoff, then a clear failure — never a silent infinite loop, and never a failure that just returns garbage instead of raising. Today's lab's <code style="color:var(--accent)">max_retries</code> parameter and final <code style="color:var(--accent)">RuntimeError</code> are the minimum viable version of this pattern.</p>
     </div>
   </div>
+  <div class="card" style="margin-top:20px">
+    <h4 style="color:var(--white);margin-bottom:10px">Why "bounded" matters — a real cost worked example</h4>
+    <p style="font-size:14px;line-height:1.65">At <code style="color:var(--accent)">gpt-4o-mini</code> pricing ($0.15 / 1M input tokens, $0.60 / 1M output tokens — verify the current rate before quoting a live cohort): a tool-calling extraction call with the schema included runs roughly 150 prompt + 80 completion tokens ≈ <strong style="color:var(--accent)">$0.00007</strong> per call. An unbounded retry loop against a persistently malformed response doesn't fail fast — it silently multiplies that cost with every retry. This lab's <code style="color:var(--accent)">max_retries=2</code> caps the worst case at 3 calls (≈$0.0002) instead of an unbounded loop.</p>
+  </div>
   <div class="capstone-note">🏦 Capstone Phase 1: this lab's extraction module is the actual Meridian Retail Bank structured-extraction component — see Capstone_Meridian_Retail_Bank/docs/</div>
+</section>
+
+<!-- S7 KEY TAKEAWAYS -->
+<section class="section" id="s7" style="min-height:auto;padding-top:60px;padding-bottom:40px">
+  <div class="section-label">Recap</div>
+  <div class="section-title">Key Takeaways</div>
+  <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+    <div class="card"><div class="accent-bar"></div><h4 style="color:var(--white);margin-bottom:6px;font-size:15px">SDK &amp; Setup</h4><p style="font-size:13px;color:var(--text)">Keys from env vars, fail loudly if missing.</p></div>
+    <div class="card"><div class="accent-bar"></div><h4 style="color:var(--white);margin-bottom:6px;font-size:15px">Streaming</h4><p style="font-size:13px;color:var(--text)">For perceived latency on free text — not structured output.</p></div>
+    <div class="card"><div class="accent-bar"></div><h4 style="color:var(--white);margin-bottom:6px;font-size:15px">Structured Outputs</h4><p style="font-size:13px;color:var(--text)">Tool calling scales forward into every future agent.</p></div>
+    <div class="card"><div class="accent-bar"></div><h4 style="color:var(--white);margin-bottom:6px;font-size:15px">Tool Calling</h4><p style="font-size:13px;color:var(--text)">Define, route, and never trust the arguments blindly.</p></div>
+    <div class="card"><div class="accent-bar"></div><h4 style="color:var(--white);margin-bottom:6px;font-size:15px">Robustness</h4><p style="font-size:13px;color:var(--text)">Bounded retries — fail clearly, never loop forever.</p></div>
+  </div>
 </section>
 
 <div class="quiz-marker fade-in" style="max-width:900px;margin-left:48px">
@@ -225,7 +286,46 @@ for chunk in stream:
   </div>
 </section>
 
+<div class="quiz-marker fade-in" style="max-width:900px;margin:0 48px 60px;background:#10B9811A;border-color:#10B98159">
+  <div>
+    <div class="quiz-title" style="color:var(--success)">✅ Mission Complete — M1.2</div>
+    <div class="quiz-desc">You now have a real, reusable structured-extraction module — SDK auth, tool calling, and bounded retries. Next up, same day: <strong style="color:var(--white)">M1.3</strong> takes prompting itself further — guardrails, output contracts and a documented evaluation set. Day 2 turns this into a full RAG pipeline.</div>
+  </div>
+</div>
+
 <script>
+// ══════════════════════════════════════════════════════════════════
+// HERO — 60-SECOND TOOL-CALLING DEMO (typewriter reveal, honestly labelled)
+// ══════════════════════════════════════════════════════════════════
+function runToolDemo(){
+  const btn = document.getElementById('tooldemo-btn');
+  const out = document.getElementById('tooldemo-output');
+  const jsonEl = document.getElementById('tooldemo-json');
+  if (!btn || !out || !jsonEl) return;
+  btn.disabled = true;
+  btn.textContent = 'Running…';
+  out.style.display = 'block';
+  jsonEl.textContent = '';
+  const full = JSON.stringify({
+    name: "Unknown",
+    account_type: "debit_card",
+    intent: "card_issue",
+    urgency: "high",
+    customer_summary: "Customer's debit card was declined twice and they need urgent help."
+  }, null, 2);
+  let i = 0;
+  const interval = setInterval(() => {
+    jsonEl.textContent = full.slice(0, i);
+    i += 4;
+    if (i > full.length){
+      clearInterval(interval);
+      jsonEl.textContent = full;
+      btn.textContent = '▶ Run it again';
+      btn.disabled = false;
+    }
+  }, 15);
+}
+
 const TOOL_STEPS = [
   {el:"1. Define the tool schema", def:"A JSON-schema description of the function's name, description, and parameters (with types, enums, and which fields are required). This is what the model reads to know what it's allowed to call and how.", ex:'{"type":"function","function":{"name":"extract_customer_request","parameters":{"type":"object","properties":{...},"required":[...]}}}'},
   {el:"2. Force or allow the tool call", def:"tool_choice can force a specific tool (right choice for extraction — you always want it called), or be left to 'auto' so the model decides whether and which tool to call (right choice once an agent has multiple real tools, from Day 2 onward).", ex:'tool_choice={"type":"function","function":{"name":"extract_customer_request"}}'},
@@ -256,6 +356,7 @@ function toggleAcc(header){
   chev.classList.toggle('open');
 }
 function initNav(){
+  if (typeof IntersectionObserver === 'undefined') return; // graceful no-op if unsupported
   const pills = document.querySelectorAll('.nav-pill');
   const sections = document.querySelectorAll('.section');
   const prog = document.getElementById('nav-prog');
@@ -271,9 +372,13 @@ function initNav(){
   },{threshold:0.4});
   sections.forEach(s=>obs.observe(s));
 }
+// Each widget initializes independently so one failure can't cascade and block the rest of the page.
+function safeInit(name, fn){
+  try { fn(); } catch (e) { console.error('Widget init failed:', name, e); }
+}
 function init(){
-  initNav();
-  renderTool();
+  safeInit('scrollNav', initNav);
+  safeInit('toolAccordion', renderTool);
 }
 window.addEventListener('DOMContentLoaded', init);
 </script>
