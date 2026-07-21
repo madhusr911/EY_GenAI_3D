@@ -778,7 +778,7 @@ docs = retriever.invoke("My salary hasn't arrived")
 <section class="section" id="labs">
   <div class="section-label">Hands-on</div>
   <div class="section-title">🚀 Lab: fix Meridian's assistant</div>
-  <div class="section-sub">Notebook: <span class="mono" style="color:var(--accent)">Day2/labs/starter/D2_M2.3_M2.4_Hybrid_Rerank_Starter.ipynb</span></div>
+  <div class="section-sub">Notebook: <span class="mono" style="color:var(--accent)">Day2/labs/starter/D2_M2.3_M2.4_Hybrid_Rerank_Starter.ipynb</span><br>Four guided parts, plus one applied lab you can run in your own time.</div>
 
   <div class="lab-card">
     <div class="lab-badge">Part 1 · after Concept 3</div>
@@ -798,6 +798,16 @@ docs = retriever.invoke("My salary hasn't arrived")
     <p style="font-size:14.5px;line-height:1.7">Fetch 20 hybrid candidates. Score them with a cross-encoder. Keep the top 5. Print before and after for three customer messages, with timings.</p>
     <p style="font-size:13.5px;color:var(--dim);margin-top:8px"><b>You should see:</b> at least one document jump from rank 9 to rank 1.</p>
   </div>
+  <div class="lab-card" style="border-color:#A78BFA55;background:linear-gradient(180deg,#A78BFA0A,#141D30)">
+    <div class="lab-badge" style="background:#A78BFA1A;color:#C9B6FF;border-color:#A78BFA4D">Applied lab · self-paced · ~45 min · no API key</div>
+    <h3>🖥️ Build a RAG app over real PDFs</h3>
+    <p style="font-size:14.5px;line-height:1.7">Everything above used a corpus that was already prepared for you — 40 short articles, one article per chunk. Real documents arrive as a 60-page HR policy PDF. This lab covers the half the notebook skipped: <b style="color:var(--purple)">loading and chunking real files</b>, then persisting them to a vector store.</p>
+    <p style="font-size:14.5px;line-height:1.7;margin-top:10px">You build a working Streamlit app: upload a PDF, index it, ask questions, get answers with the source chunks shown underneath. Runs 100% locally on Ollama — no key, no cost, works offline.</p>
+    <p style="font-size:13.5px;color:var(--dim);margin-top:10px"><b style="color:#C9B6FF">The point is the chunking experiment:</b> rebuild the index at chunk_size 200, then 4000. Both make answers worse, for opposite reasons. That one setting causes more bad RAG results than model choice does.</p>
+    <p style="font-size:13.5px;color:var(--dim);margin-top:12px">Folder: <span class="mono" style="color:var(--accent)">Day2/labs/starter/rag-project/</span> · Instructions: <span class="mono" style="color:var(--accent)">Day2/labs/readme/D2_M2.3_RAG_App_README.md</span></p>
+    <p style="font-size:13px;color:#FCA5A5;margin-top:10px">⚠️ Pull both Ollama models <b>before</b> the session — about 1.6 GB total.</p>
+  </div>
+
   <div class="lab-card">
     <div class="lab-badge">Part 4 · after Concept 9</div>
     <h3>End to end, with metrics</h3>
