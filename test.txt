@@ -4,3 +4,15 @@ print(sys.executable)
 
 ------------------- NEW PIP INSTALL----------------------
 pip install python-dotenv openai pydantic numpy rank_bm25 chromadb qdrant-client langchain langchain-core langchain-openai
+
+-----------------RAG PROJECT----------------------------
+1)pip install streamlit
+2)pip install -r requirements.txt
+3) pip install langchain-community
+4) winget install Ollama.Ollama
+5)  ollama --version
+6) ollama pull nomic-embed-text
+7) ollama pull llama3.2:1b
+8) ollama list
+9) ollama serve
+10) python -m streamlit run app.py
