@@ -1,15 +1,15 @@
-from langchain_ollama import ChatOllama
+from langchain_openai import ChatOpenAI
 from langchain_chroma import Chroma
 from langchain_classic.chains import RetrievalQA
 
 from rag.indexer import _get_embeddings
 
-GENERATION_MODEL = "llama3.2:1b"
+GENERATION_MODEL = "gpt-4o-mini"
 
 
 def get_qa_chain(persist_dir: str = "chroma_db"):
     vectorstore = Chroma(persist_directory=persist_dir, embedding_function=_get_embeddings())
-    llm = ChatOllama(model=GENERATION_MODEL, temperature=0)
+    llm = ChatOpenAI(model=GENERATION_MODEL, temperature=0)
     return RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",

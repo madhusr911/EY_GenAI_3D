@@ -6,6 +6,7 @@ import streamlit.components.v1 as components
 
 from rag.indexer import build_index, index_exists, get_chunk_count, clear_index
 from rag.retriever import get_answer
+from rag.evaluator import evaluate_answer
 
 PERSIST_DIR = "chroma_db"
 
@@ -346,18 +347,38 @@ else:
         st.rerun()
 
     if st.session_state.get("query_running"):
-        st.session_state["query_running"] = False
-        with st.spinner("Searching ChromaDB and generating answer locally…"):
-            try:
-                result = get_answer(
-                    st.session_state["last_question"],
-                    persist_dir=PERSIST_DIR,
-                )
-                st.markdown("### Answer")
-                st.markdown(result["answer"])
-                with st.expander("Sources — chunks retrieved from ChromaDB"):
-                    for i, chunk in enumerate(result["sources"], 1):
-                        st.markdown(f"**Chunk {i}**")
-                        st.text(chunk)
-            except Exception as exc:
-                st.error(f"Error: {exc}")
+      st.session_state["query_running"] = False
+      with st.spinner("Searching ChromaDB and generating answer…"):
+          try:
+              result = get_answer(
+                  st.session_state["last_question"],
+                  persist_dir=PERSIST_DIR,
+              )
+              st.session_state["last_result"] = result
+          except Exception as exc:
+              st.error(f"Error: {exc}")
+              st.session_state["last_result"] = None
+
+      if st.session_state.get("last_result"):
+          result = st.session_state["last_result"]
+          st.markdown("### Answer")
+          st.markdown(result["answer"])
+          with st.expander("Sources — chunks retrieved from ChromaDB"):
+              for i, chunk in enumerate(result["sources"], 1):
+                  st.markdown(f"**Chunk {i}**")
+                  st.text(chunk)
+
+          st.divider()
+          if st.button("🧪 Evaluate this answer (Ragas)"):
+              with st.spinner("Scoring with Ragas… (2 extra OpenAI calls, a few seconds)"):
+                  try:
+                      scores = evaluate_answer(
+                          question=st.session_state["last_question"],
+                          answer=result["answer"],
+                          contexts=result["sources"],
+                      )
+                      c1, c2 = st.columns(2)
+                      c1.metric("Faithfulness", f"{scores['faithfulness']:.2f}")
+                      c2.metric("Answer Relevancy", f"{scores['answer_relevancy']:.2f}")
+                  except Exception as exc:
+                      st.error(f"Evaluation failed: {exc}")

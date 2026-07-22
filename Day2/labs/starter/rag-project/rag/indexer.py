@@ -2,10 +2,10 @@ from pathlib import Path
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_ollama import OllamaEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 
-EMBEDDING_MODEL = "nomic-embed-text"
+EMBEDDING_MODEL = "text-embedding-3-small"
 
 
 def chunk_document(pdf_path: str, chunk_size: int = 1000, chunk_overlap: int = 200) -> list:
@@ -24,7 +24,7 @@ def chunk_document(pdf_path: str, chunk_size: int = 1000, chunk_overlap: int = 2
 
 
 def _get_embeddings():
-    return OllamaEmbeddings(model=EMBEDDING_MODEL)
+    return OpenAIEmbeddings(model=EMBEDDING_MODEL)
 
 
 def index_exists(persist_dir: str) -> bool:
