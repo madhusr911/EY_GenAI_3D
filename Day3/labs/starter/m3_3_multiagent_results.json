@@ -1,0 +1,12 @@
+{
+  "task1_calc_answer": "15% of 40,000 is 6,000.",
+  "task1_research_answer": "Meridian's daily UPI limit is up to one lakh rupees across all apps linked to your account. However, new UPI registrations are capped at five thousand rupees for the first twenty-four hours.",
+  "task2_calculator_only_final": "15% of 40,000 rupees is 6,000 rupees.",
+  "task2_research_only_final": "Meridian's daily UPI limit is up to one lakh rupees per day across all apps linked to your account. However, new UPI registrations are capped at five thousand rupees for the first twenty-four hours.",
+  "task2_needs_both_final": "2% of 1,25,000 rupees is 2,500 rupees.",
+  "task3_calculator_handoff": "What is 2% of 1,25,000 rupees?",
+  "task3_research_handoff": "",
+  "task4_sequential_seconds": 5.56488989997888,
+  "task4_parallel_seconds": 1.8716794999781996,
+  "key_takeaway": "\nKEY TAKEAWAY: A supervisor decides WHO answers a question -- it never does the work itself\n(Task 1, 2). A hand-off is a focused, standalone instruction, not the raw conversation (Task 2).\nKeeping each specialist's world isolated means one specialist's confusion can never leak into the\nother's answer (Task 3, proven by inspection). And when two specialists are genuinely\nindependent, running them in parallel gives you the same answers in roughly half the time,\nfor free (Task 4).\n"
+}

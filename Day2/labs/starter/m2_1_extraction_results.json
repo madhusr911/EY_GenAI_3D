@@ -1,0 +1,115 @@
+{
+  "sample_evaluation": [
+    {
+      "id": 1,
+      "ok": true,
+      "result": {
+        "name": "Unknown",
+        "account_type": "debit_card",
+        "intent": "card_issue",
+        "urgency": "high",
+        "customer_summary": "The customer is experiencing issues with their debit card being declined and needs immediate assistance to resolve it before paying rent."
+      }
+    },
+    {
+      "id": 2,
+      "ok": true,
+      "result": {
+        "name": "Unknown",
+        "account_type": "credit_card",
+        "intent": "fraud_report",
+        "urgency": "high",
+        "customer_summary": "The customer is reporting an unauthorized transaction on their credit card and requests immediate investigation."
+      }
+    },
+    {
+      "id": 3,
+      "ok": true,
+      "result": {
+        "name": "Unknown",
+        "account_type": "personal_loan",
+        "intent": "loan_inquiry",
+        "urgency": "medium",
+        "customer_summary": "The customer is inquiring about the documents required to apply for a personal loan of 5 lakhs."
+      }
+    },
+    {
+      "id": 4,
+      "ok": true,
+      "result": {
+        "name": "Unknown",
+        "account_type": "savings_account",
+        "intent": "account_access",
+        "urgency": "high",
+        "customer_summary": "The customer is unable to log into their savings account app due to an invalid password error, even after resetting it."
+      }
+    },
+    {
+      "id": 5,
+      "ok": true,
+      "result": {
+        "name": "Unknown",
+        "account_type": "mortgage",
+        "intent": "general_question",
+        "urgency": "low",
+        "customer_summary": "The customer is inquiring about the current interest rates for a 20-year home loan."
+      }
+    },
+    {
+      "id": 6,
+      "ok": true,
+      "result": {
+        "name": "Unknown",
+        "account_type": "unknown",
+        "intent": "complaint",
+        "urgency": "medium",
+        "customer_summary": "The customer is unhappy with their experience of being on hold for a long time and having the call drop."
+      }
+    },
+    {
+      "id": 7,
+      "ok": true,
+      "result": {
+        "name": "Unknown",
+        "account_type": "credit_card",
+        "intent": "general_question",
+        "urgency": "medium",
+        "customer_summary": "The customer wants to know if they can request an increase to their credit limit online for their Meridian Platinum card."
+      }
+    },
+    {
+      "id": 8,
+      "ok": true,
+      "result": {
+        "name": "Unknown",
+        "account_type": "savings_account",
+        "intent": "general_question",
+        "urgency": "medium",
+        "customer_summary": "The customer is inquiring about the process to close a deceased relative's savings account."
+      }
+    },
+    {
+      "id": 9,
+      "ok": true,
+      "result": {
+        "name": "Unknown",
+        "account_type": "unknown",
+        "intent": "fraud_report",
+        "urgency": "high",
+        "customer_summary": "The customer wants to report a fraudulent call from someone claiming to be from Meridian Bank who asked for their card PIN."
+      }
+    },
+    {
+      "id": 10,
+      "ok": true,
+      "result": {
+        "name": "Unknown",
+        "account_type": "savings_account",
+        "intent": "account_access",
+        "urgency": "low",
+        "customer_summary": "The customer wants to check their current savings account balance and recent transactions from the last week."
+      }
+    }
+  ],
+  "key_takeaway": "\nKEY TAKEAWAY: with_structured_output replaced M1.2's manual tool-schema\ndict + raw tool_calls parsing + Pydantic validation try/except with one\nmethod call. with_retry replaced a hand-written for-loop with backoff\nwith one more. Two lines doing the job ~20 lines used to do.\n"
+}

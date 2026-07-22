@@ -1,0 +1,17 @@
+{
+  "task1_single_tool_final_answer": "2500 divided by 20 is 125.0.",
+  "task2_policy_tool_called": [
+    "search_meridian_kb"
+  ],
+  "task2_math_tool_called": [
+    "calculator"
+  ],
+  "task3_tool_call_order": [
+    "search_meridian_kb",
+    "calculator"
+  ],
+  "task3_final_answer": "The total amount the customer wants to send via UPI today is 95,000 rupees. The daily UPI limit is 100,000 rupees. \n\nSince 95,000 is within the limit, the customer will not breach the daily UPI limit. They have 5,000 rupees of room left.",
+  "task4_agent_ms": 2080.314999970142,
+  "task4_direct_ms": 0.05400000372901559,
+  "key_takeaway": "\nKEY TAKEAWAY: An agent is autonomy + tools + a feedback loop, together. Task 1 showed the\nloop with one tool. Task 2 showed the SAME agent routing correctly between two tools, based\nonly on their descriptions. Task 3 showed it planning a two-step path -- search, then\ncalculate -- that nobody hard-coded. Task 4 showed why that power isn't free: for a fixed,\ndeterministic task, a plain function beat the agent by a wide margin, with an identical answer.\n"
+}

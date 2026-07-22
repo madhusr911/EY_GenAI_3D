@@ -1,0 +1,16 @@
+{
+  "task1_small_decision": "auto-approved",
+  "task1_large_paused": true,
+  "task2_restart_final_decision": "approved",
+  "task3_approve_decision": "approved",
+  "task3_reject_decision": "rejected",
+  "task4_recovered_log": [
+    "triage: extracted intent=upi_transfer, amount=10000.0",
+    "policy_check: fetched UPI daily limit policy",
+    "auto_process: approved, under daily limit",
+    "notify: customer told -- auto-approved (after one retry)"
+  ],
+  "task5_forked_decision": "rejected",
+  "task5_original_still_paused": true,
+  "key_takeaway": "\nKEY TAKEAWAY: A LangGraph workflow is a shared state notebook (TriageState) passed through\nplain-function nodes, connected by edges -- including a conditional edge that branches on real\nrisk data (Task 1). A checkpointer turns that into something durable: kill the process, reopen\na fresh one, and it resumes exactly where it paused (Task 2). interrupt() and Command(resume=...)\nturn a pause into a genuine human approval gate, both ways (Task 3). The same save-file mechanic\nthat makes a human's pause resumable also recovers a workflow after a real crash (Task 4). And\nevery checkpoint stays inspectable forever -- you can rewind to any past decision point and\nreplay it differently, without erasing what actually happened (Task 5).\n"
+}
